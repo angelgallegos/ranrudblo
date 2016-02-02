@@ -1,0 +1,213 @@
+<% content_for :head do %>
+  <script type="text/javascript">
+    $( document ).ready(function() {
+      console.log( "ready!" );
+      $('#new_comment').submit(function() {  
+	  var valuesToSubmit = $(this).serialize();
+	  $.ajax({
+	      type: "POST",
+	      url: $(this).attr('action'), //sumbits it to the given url of the form
+	      data: valuesToSubmit,
+	      dataType: "JSON", // you want a difference between normal and ajax-calls, and json is standard
+	      statusCode: {
+		500: function(xhr) {
+		  if(window.console) console.log(xhr.responseText);
+		},
+		201: function(xhr){
+		  $("#commen_content").val("").change()
+		  var message="Comentario creado"
+		  /*$.each(data.errors, function(key, value){
+		    message+="<br>"+value.message
+		    $("#item_"+value.field).addClass("error")
+		  })*/
+		  $("#messageComment").removeClass("alert alert-danger").addClass("alert alert-success").html(message)
+		  $('html, body').animate({
+		    scrollTop: $("#messageComment").offset().top
+		  }, 1000);
+		  setTimeout(function(){ $("#messageComment").addClass("hidden"); }, 3000);
+		},
+		422: function(xhr){
+		  var message="Comentario no se ha creado"
+		  /*$.each(data.errors, function(key, value){
+		    message+="<br>"+value.message
+		    $("#item_"+value.field).addClass("error")
+		  })*/
+		  $("#messageComment").removeClass("alert alert-success").addClass("alert alert-danger").html(message)
+		  $('html, body').animate({
+		    scrollTop: $("#messageComment").offset().top
+		  }, 1000);
+		  setTimeout(function(){ $("#messageComment").addClass("hidden"); }, 3000);
+		}, 
+	      }
+	  }).success(function(json){
+	      console.log("success", json);
+	  });
+	  return false; // prevents normal behaviour
+      });
+    });
+  </script>
+<% end %>
+<div class="row">
+  <!-- Blog Post Content Column -->
+  
+  <div class="col-lg-8">
+    <% if notice %>
+      <div id="notice" class="alert alert-success"><%= notice %></div>
+    <% end %>
+    <!-- Blog Post -->
+    <!-- Title -->
+    <h1><%= @micropost.name %></h1>
+    <!-- Author -->
+    <p class="lead">
+      <%= t(:micropost_user_by) %>&nbsp;<%= link_to @micropost.user, user_path(@micropost.user) %>
+    </p>
+    <hr>
+    <!-- Date/Time -->
+    <p>
+      <span class="glyphicon glyphicon-time"></span> <%= t(:micropost_posted_on) %> <%= @micropost.formated_date  %>
+    </p>
+    <hr>
+    <p>
+    <%= @micropost.category %>
+    </p>
+    <hr>
+    <!-- Preview Image -->
+    <img class="img-responsive" src="http://placehold.it/900x300" alt="">
+    <hr>
+    <!-- Post Content -->
+    <%= raw @micropost.content %>
+    <!--p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ut, tenetur natus doloremque laborum quos iste ipsum rerum obcaecati impedit odit illo dolorum ab tempora nihil dicta earum fugiat. Temporibus, voluptatibus.</p>
+    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Eos, doloribus, dolorem iusto blanditiis unde eius illum consequuntur neque dicta incidunt ullam ea hic porro optio ratione repellat perspiciatis. Enim, iure!</p>
+    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Error, nostrum, aliquid, animi, ut quas placeat totam sunt tempora commodi nihil ullam alias modi dicta saepe minima ab quo voluptatem obcaecati?</p>
+    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Harum, dolor quis. Sunt, ut, explicabo, aliquam tenetur ratione tempore quidem voluptates cupiditate voluptas illo saepe quaerat numquam recusandae? Qui, necessitatibus, est!</p-->
+    <hr>
+    <p>
+      <%= link_to 'Edit', edit_micropost_path(@micropost) %> |
+      <%= link_to 'Back', microposts_path %>
+    </p>
+    <hr>
+    <!-- Blog Comments -->
+    <!-- Comments Form -->
+    <div class="well">
+      <h4>Leave a Comment:</h4>
+	<div id="messageComment"></div>
+	<%= form_for(Comment.new) do |f| %>
+	
+	  <div class="form-group">
+	    <%= f.text_area :content, :class=>"form-control" %>
+	  </div>
+	  <%= f.text_field :user_id,  :value => "1" %>
+	  <%= f.hidden_field :micropost_id, :value => "#{@micropost.id}" %>
+	  <%= f.hidden_field :comment_id %>
+	  <%= f.submit 'Submit', :class => 'btn btn-primary' %>
+	<% end %>
+	
+	
+    </div>
+    <hr>
+    <!-- Posted Comments -->
+    <!-- Comment -->
+    <% @micropost.comments.each do |comment| %>
+    <div class="media">
+      <a class="pull-left" href="#">
+	<img class="media-object" src="http://placehold.it/64x64" alt="">
+      </a>
+      <div class="media-body">
+	<h4 class="media-heading"><%= comment.user %>
+	  <small><%= comment.created_at %></small>
+        </h4>
+        <%= comment.content %>
+	  <% comment.nested_comments.each do |nested_comment| %>
+	  <!-- Nested Comment -->
+	  <div class="media">
+	    <a class="pull-left" href="#">
+	      <img class="media-object" src="http://placehold.it/64x64" alt="">
+	    </a>
+	    <div class="media-body">
+	      <h4 class="media-heading"><%= nested_comment.user %>
+		<small><%= nested_comment.created_at %></small>
+	      </h4>
+	      <%= nested_comment.content %>
+	    </div>
+	  </div>
+	  <!-- End Nested Comment -->
+	  <% end %>
+      </div>
+    </div>
+    <% end %>
+  </div>
+  
+  <!-- Blog Sidebar Widgets Column -->
+  <div class="col-md-4">
+    <!-- Blog Search Well -->
+    <div class="well">
+    <h4>Blog Search</h4>
+      <div class="input-group">
+	<input type="text" class="form-control">
+	<span class="input-group-btn">
+          <button class="btn btn-default" type="button">
+	    <span class="glyphicon glyphicon-search"></span>
+          </button>
+	</span>
+      </div>
+      <!-- /.input-group -->
+    </div>
+    <!-- Blog Categories Well -->
+    <div class="well">
+      <h4>Blog Categories</h4>
+	<div class="row">
+	  <div class="col-lg-6">
+	    <ul class="list-unstyled">
+	      <li>
+		<a href="#">Category Name</a>
+              </li>
+              <li>
+		<a href="#">Category Name</a>
+              </li>
+              <li>
+		<a href="#">Category Name</a>
+              </li>
+	      <li>
+		<a href="#">Category Name</a>
+              </li>
+	    </ul>
+          </div>
+          <div class="col-lg-6">
+	    <ul class="list-unstyled">
+	      <li>
+		<a href="#">Category Name</a>
+              </li>
+              <li>
+		<a href="#">Category Name</a>
+              </li>
+              <li>
+		<a href="#">Category Name</a>
+              </li>
+              <li>
+		<a href="#">Category Name</a>
+              </li>
+            </ul>
+          </div>
+        </div>
+	<!-- /.row -->
+      </div>
+      <!-- Side Widget Well -->
+      <div class="well">
+	<h4>Side Widget Well</h4>
+        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Inventore, perspiciatis adipisci accusamus laudantium odit aliquam repellat tempore quos aspernatur vero.</p>
+      </div>
+    </div>
+  </div>
+  <!-- /.row -->
+  <hr>
+  <!-- Footer -->
+  <footer>
+    <div class="row">
+      <div class="col-lg-12">
+	<p>Copyright &copy; Your Website 2014</p>
+      </div>
+    </div>
+    <!-- /.row -->
+  </footer>
+
+

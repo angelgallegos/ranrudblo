@@ -1,0 +1,15 @@
+<div class="jumbotron">
+  <h1><%= t :home_title %></h1>
+  <p><%= t :home_message %></p> 
+</div>
+<p id="notice"><%= notice %></p>
+<div class="row">
+    <% @microposts.each do |micropost| %>
+    <div class="col-sm-4">
+      <h3><%= micropost.name %></h3>
+      <p><%= raw micropost.short_content %></p>
+      <p><%= link_to micropost.user, user_path(micropost.user) %> | <%= link_to micropost.category, category_path(micropost.category) %> | <%= link_to t(:show), micropost %> | <%= link_to t(:edit), edit_micropost_path(micropost) %> | <%= link_to t(:delete), micropost, method: :delete, data: { confirm: t(:default_delete_message) } %></p>
+    </div>
+    <% end %>
+</div>
+<%= link_to t(:micropost_new_link), new_micropost_path %>
