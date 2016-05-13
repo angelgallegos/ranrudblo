@@ -37,3 +37,17 @@ en:
   new_micropost_title: "New micropost"
   micropost_user_by: "by"
   micropost_posted_on: "Posted on"
+  
+  login_title: "Sign in to continue to blog"
+  login_email: "E-mail"
+  login_password: "Password"
+  login_submit: "Log in"
+  login_remember_me: "Remember me"
+  login_need_help: "Need help?"
+  log_in_link: "Log in"
+  
+  sign_up_link: "Sign up"
+  password_forget_link: "Forgot your password?"
+  not_confirmation_instructions_link: "Didn't receive confirmation instructions?"
+  not_unlock_instructions_link: "Didn't receive unlock instructions?"
+  

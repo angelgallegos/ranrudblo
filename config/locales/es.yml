@@ -37,3 +37,17 @@ es:
   new_micropost_title: "Nuevo micropost"
   micropost_user_by: "por"
   micropost_posted_on: "Publicado el"
+  
+  login_title: "Entrar al blog"
+  login_email: "Correo electronico"
+  login_password: "Contraseña"
+  login_submit: "Entrar"
+  login_remember_me: "Recordarme"
+  login_need_help: "¿Necesitas ayuda?"
+  log_in_link: "Entrar"
+  
+  sign_up_link: "Registrarse"
+  password_forget_link: "¿Olvidaste tu contraseña?"
+  not_confirmation_instructions_link: "¿No recibio instrucciones de confirmación?"
+  not_unlock_instructions_link: "¿No recibio instrucciones de desbloqueo?"
+  

@@ -19,10 +19,7 @@
     <%= f.label t(:micropost_content) %>:
     <%= f.text_area :content, :class=>'form-control' %>
   </div>
-  <div class="form-group">
-    <%= f.label t(:micropost_user) %>:
-    <%= collection_select(:micropost, :user_id, @users, :id, :name, {:prompt => false}, {:class=>'form-control'}) %>
-  </div>
+  <%= f.hidden_field :user_id,  :value => current_user.id %>
   <div class="form-group">
     <%= f.label t(:micropost_category) %>:
     <%= collection_select(:micropost, :category_id, @categories, :id, :name, {:prompt => false}, {:class=>'form-control'}) %>

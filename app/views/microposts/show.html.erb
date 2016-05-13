@@ -2,8 +2,8 @@
   <script type="text/javascript">
     $( document ).ready(function() {
       console.log( "ready!" );
-      $('#new_comment').submit(function() {  
-	  var valuesToSubmit = $(this).serialize();
+      $('#new_comment').submit(function() {
+          var valuesToSubmit = $(this).serialize();
 	  $.ajax({
 	      type: "POST",
 	      url: $(this).attr('action'), //sumbits it to the given url of the form
@@ -96,7 +96,7 @@
 	  <div class="form-group">
 	    <%= f.text_area :content, :class=>"form-control" %>
 	  </div>
-	  <%= f.text_field :user_id,  :value => "1" %>
+	  <%= f.hidden_field :user_id,  :value => "1" %>
 	  <%= f.hidden_field :micropost_id, :value => "#{@micropost.id}" %>
 	  <%= f.hidden_field :comment_id %>
 	  <%= f.submit 'Submit', :class => 'btn btn-primary' %>
@@ -117,7 +117,7 @@
 	  <small><%= comment.created_at %></small>
         </h4>
         <%= comment.content %>
-	  <% comment.nested_comments.each do |nested_comment| %>
+          <% comment.nested_comments.each do |nested_comment| %>
 	  <!-- Nested Comment -->
 	  <div class="media">
 	    <a class="pull-left" href="#">

@@ -1,6 +1,6 @@
 class MicropostsController < ApplicationController
   before_action :set_micropost, only: [:show, :edit, :update, :destroy]
-
+  before_action :authenticate_user!, :except => [:index, :show]
   # GET /microposts
   # GET /microposts.json
   def index
