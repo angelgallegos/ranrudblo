@@ -1,0 +1,24 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Replace what:</strong>
+  <%= @substitution.replace_what %>
+</p>
+
+<p>
+  <strong>Replace with:</strong>
+  <%= @substitution.replace_with %>
+</p>
+
+<p>
+  <strong>Substitution type:</strong>
+  <%= @substitution.substitution_type_id %>
+</p>
+
+<p>
+  <strong>User:</strong>
+  <%= @substitution.user_id %>
+</p>
+
+<%= link_to 'Edit', edit_substitution_path(@substitution) %> |
+<%= link_to 'Back', substitutions_path %>

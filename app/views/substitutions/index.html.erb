@@ -1,0 +1,33 @@
+<p id="notice"><%= notice %></p>
+
+<h1>Listing Substitutions</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Replace what</th>
+      <th>Replace with</th>
+      <th>Substitution type</th>
+      <th>User</th>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @substitutions.each do |substitution| %>
+      <tr>
+        <td><%= substitution.replace_what %></td>
+        <td><%= substitution.replace_with %></td>
+        <td><%= substitution.substitution_type_id %></td>
+        <td><%= substitution.user_id %></td>
+        <td><%= link_to 'Show', substitution %></td>
+        <td><%= link_to 'Edit', edit_substitution_path(substitution) %></td>
+        <td><%= link_to 'Destroy', substitution, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Substitution', new_substitution_path %>

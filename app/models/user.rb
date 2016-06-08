@@ -8,6 +8,7 @@ class User < ActiveRecord::Base
   validates_uniqueness_of :email
   
   has_many :microposts, dependent: :destroy
+  has_many :substitutions, dependent: :destroy
   has_many :comments
   def to_s
     "#{self.email}"

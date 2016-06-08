@@ -1,0 +1,13 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  replace_what: MyString
+  replace_with: MyString
+  substitution_type_id: MyString
+  user_id: MyString
+
+two:
+  replace_what: MyString
+  replace_with: MyString
+  substitution_type_id: MyString
+  user_id: MyString
