@@ -1,5 +1,6 @@
 class MicropostsController < ApplicationController
   before_action :set_micropost, only: [:show, :edit, :update, :destroy]
+  before_action :set_comment, only: [:new_comment_partial]
   before_action :authenticate_user!, :except => [:index, :show]
   # GET /microposts
   # GET /microposts.json
@@ -19,6 +20,11 @@ class MicropostsController < ApplicationController
     @categories = Category.all
   end
 
+  # GET /new_comment_partial
+  def new_comment_partial
+    render :partial => "/comments/new"
+  end
+  
   # GET /microposts/1/edit
   def edit
     @users = User.all
@@ -73,7 +79,11 @@ class MicropostsController < ApplicationController
     def set_micropost
       @micropost = Micropost.find(params[:id])
     end
-
+    
+    def set_comment
+      @comment = Comment.find(params[:id])
+    end
+      
     # Never trust parameters from the scary internet, only allow the white list through.
     def micropost_params
       params.require(:micropost).permit(:content, :user_id, :category_id, :name)

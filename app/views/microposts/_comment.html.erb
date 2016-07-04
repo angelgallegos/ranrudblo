@@ -7,6 +7,12 @@
         <small><%= comment.created_at %></small>
     </h4>
     <%= comment.content %>
+          <div class="reply">
+            <%= link_to "Reply", new_comment_partial_path(comment), :remote => true, :name=>"show_new_comment", :id=>"#{comment.id}" %>
+          </div>
+          <div class="media" id="comment-reply-<%= comment.id %>">
+        
+          </div>
     <%= render partial: "comment", collection: comment.nested_comments %>
   </div>
 </div>

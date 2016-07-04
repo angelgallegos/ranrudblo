@@ -51,3 +51,5 @@ en:
   not_confirmation_instructions_link: "Didn't receive confirmation instructions?"
   not_unlock_instructions_link: "Didn't receive unlock instructions?"
   
+  leave_comment: "Leave a comment"
+  submit_comment: "Submit comment"

@@ -1,8 +1,7 @@
 <% content_for :head do %>
-  <script type="text/javascript">
-    $( document ).ready(function() {
-      console.log( "ready!" );
-      $('#new_comment').submit(function() {
+<script type="text/javascript">
+  $( document ).ready(function() {
+      /*$('#new_comment').submit(function() {
           var valuesToSubmit = $(this).serialize();
 	  $.ajax({
 	      type: "POST",
@@ -16,10 +15,10 @@
 		201: function(xhr){
 		  $("#commen_content").val("").change()
 		  var message="Comentario creado"
-		  /*$.each(data.errors, function(key, value){
-		    message+="<br>"+value.message
-		    $("#item_"+value.field).addClass("error")
-		  })*/
+		  //$.each(data.errors, function(key, value){
+		    //message+="<br>"+value.message
+		    //$("#item_"+value.field).addClass("error")
+		  //})
 		  $("#messageComment").removeClass("alert alert-danger").addClass("alert alert-success").html(message)
 		  $('html, body').animate({
 		    scrollTop: $("#messageComment").offset().top
@@ -28,10 +27,10 @@
 		},
 		422: function(xhr){
 		  var message="Comentario no se ha creado"
-		  /*$.each(data.errors, function(key, value){
-		    message+="<br>"+value.message
-		    $("#item_"+value.field).addClass("error")
-		  })*/
+		  //$.each(data.errors, function(key, value){
+		    //message+="<br>"+value.message
+		    //$("#item_"+value.field).addClass("error")
+		  //})
 		  $("#messageComment").removeClass("alert alert-success").addClass("alert alert-danger").html(message)
 		  $('html, body').animate({
 		    scrollTop: $("#messageComment").offset().top
@@ -43,9 +42,43 @@
 	      console.log("success", json);
 	  });
 	  return false; // prevents normal behaviour
-      });
+      });*/
+    $(".new_comment").on("ajax:success", function(e, data, status, xhr){
+      alert(status)
+    }).on("ajax:error", function(e, xhr, status, error){
+      var id=$(this).attr("id")
+      console.log(id)
+      var cmid=id.split("-")
+      if(id.startsWith("micropost-")){
+        console.log("Micropost")
+        var message="Comentario no se ha creado"
+        $("#micropostMessage-"+cmid[1]).removeClass("alert alert-success").addClass("alert alert-danger").html(message)
+        $('html, body').animate({
+          scrollTop: $("#micropostMessage-"+cmid[1]).offset().top
+        }, 1000);
+        setTimeout(function(){ $("#commentMessage-"+cmid[1]).addClass("hidden"); }, 3000);
+      }
+      else if(id.startsWith("comment-")){
+        console.log("Comentario")
+        var message="Comentario no se ha creado"
+        $("#commentMessage-"+cmid[1]).removeClass("alert alert-success").addClass("alert alert-danger").html(message)
+        $('html, body').animate({
+          scrollTop: $("#messageComment-"+cmid[1]).offset().top
+        }, 1000);
+        setTimeout(function(){ $("#commentMessage-"+cmid[1]).addClass("hidden"); }, 3000);
+      }
+      
+      console.log(e)
+      console.log(xhr.status)
+      console.log(status)
+      console.log(error)
+    })
+    $('[name="show_new_comment"]').bind('ajax:success',function(evt, data, status, xhr){
+      var id=$(this).attr("id");
+      $("div#comment-reply-"+id).html(data);
     });
-  </script>
+  });
+</script>
 <% end %>
 <div class="row">
   <!-- Blog Post Content Column -->
@@ -88,22 +121,7 @@
     <hr>
     <!-- Blog Comments -->
     <!-- Comments Form -->
-    <div class="well">
-      <h4>Leave a Comment:</h4>
-	<div id="messageComment"></div>
-	<%= form_for(Comment.new) do |f| %>
-	
-	  <div class="form-group">
-	    <%= f.text_area :content, :class=>"form-control" %>
-	  </div>
-	  <%= f.hidden_field :user_id,  :value => "1" %>
-	  <%= f.hidden_field :micropost_id, :value => "#{@micropost.id}" %>
-	  <%= f.hidden_field :comment_id %>
-	  <%= f.submit 'Submit', :class => 'btn btn-primary' %>
-	<% end %>
-	
-	
-    </div>
+    <%= render :partial => '/comments/new', :micropost_id => @micropost.id %>
     <hr>
     <!-- Posted Comments -->
     <!-- Comment -->

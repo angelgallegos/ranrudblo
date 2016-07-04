@@ -18,6 +18,7 @@ Rails.application.routes.draw do
   
   resources :substitution_types
   
+  get "/new_comment_partial/:id " => "microposts#new_comment_partial", :as => 'new_comment_partial' 
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
 

@@ -51,3 +51,5 @@ es:
   not_confirmation_instructions_link: "¿No recibio instrucciones de confirmación?"
   not_unlock_instructions_link: "¿No recibio instrucciones de desbloqueo?"
   
+  leave_comment: "Deja un comentario"
+  submit_comment: "Enviar comentario"
