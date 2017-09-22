@@ -28,9 +28,9 @@ ActiveRecord::Schema.define(version: 20160602040230) do
     t.datetime "updated_at",               null: false
   end
 
-  add_index "comments", ["comment_id"], name: "fk_rails_eb62568a69", using: :btree
-  add_index "comments", ["micropost_id"], name: "fk_rails_07de7e569c", using: :btree
-  add_index "comments", ["user_id"], name: "fk_rails_452df09c60", using: :btree
+  add_index "comments", ["comment_id"], name: "fk_rails_ac3906d37d", using: :btree
+  add_index "comments", ["micropost_id"], name: "fk_rails_82a4397e75", using: :btree
+  add_index "comments", ["user_id"], name: "fk_rails_3c65b5a35b", using: :btree
 
   create_table "microposts", force: :cascade do |t|
     t.text     "content",     limit: 65535
@@ -41,8 +41,8 @@ ActiveRecord::Schema.define(version: 20160602040230) do
     t.string   "name",        limit: 255
   end
 
-  add_index "microposts", ["category_id"], name: "fk_rails_7c04fe538d", using: :btree
-  add_index "microposts", ["user_id"], name: "fk_rails_e00b81b250", using: :btree
+  add_index "microposts", ["category_id"], name: "fk_rails_a6bb970b93", using: :btree
+  add_index "microposts", ["user_id"], name: "fk_rails_292d089e60", using: :btree
 
   create_table "substitution_types", force: :cascade do |t|
     t.string   "name",       limit: 255
